@@ -1,7 +1,10 @@
 require 'pdfkit'
 require 'combine_pdf'
 require 'watir'
+require 'json'
+require 'date'
 
+# initialize stuff
 wkhtml = "wkhtmltopdf.exe"
 priv_key = "C:\\keys\\priv"
 enc_file = "enc"
@@ -15,10 +18,13 @@ PDFKit.configure do |config|
   config.wkhtmltopdf = wkhtml
   config.default_options = {
     :page_size => 'Letter',
-    :print_media_type => true
+    :print_media_type => true,
+    :disable_external_links => true,
+    :encoding => 'utf-8'
   }
 end
 
+# navigate to page
 parent = Watir::Browser.new :chrome
 parent.goto "waterlooworks.uwaterloo.ca"
 parent.link(text: "Students/Staff").click
@@ -29,31 +35,55 @@ parent.link(text: "Hire Waterloo Co-op").click
 parent.input(id: "postingId").send_keys(ARGV[0])
 parent.form(id: "searchByPostingNumberForm").link.click
 
-position = parent.tr(text: /job title/i).text
-company = parent.tr(text: /organization/i).text
+# extract info
+position = parent.tr(text: /job title/i).text.split(": ").last
+company = parent.tr(text: /organization/i).text.split(": ").last
 
-searchText = parent.tr(text: /job summary/i).text
-searchText += "\n\n" + parent.tr(text: /job responsibilities/i).text
-searchText += "\n\n" + parent.tr(text: /required skills/i).text
-searchText.downcase!
+search_text = parent.tr(text: /job summary/i).text
+search_text += "\n\n" + parent.tr(text: /job responsibilities/i).text
+search_text += "\n\n" + parent.tr(text: /required skills/i).text
+search_text.downcase!
 
-puts position, company
+# a bit of processing
+position.gsub!(/ engineering/i, "")
+company.gsub!(/( corp| inc)/i, "")
 
-sleep 5
+# more initialization
+base_text = ""
+body = ""
+json = ""
+File.open("base.html").each{ |line| base_text += line}.close
+date = Date.today.strftime("%B %e, %Y")
 
-puts searchText
+# load mappings and search
+File.open("mappings.json").each{ |line| json += line}.close
+mappings = JSON.parse(json)
+mappings.each do |i|
+  exp = Regexp.new(i[1]["matcher"])
+  
+  if(exp.match(search_text))
+    body += i[1]["text"] + "\n\n"
+  end
+end
 
-sleep(60)
+body.force_encoding(::Encoding::UTF_8)
+base_text.force_encoding(::Encoding::UTF_8)
 
-# kit = PDFKit.new(File.new('base.html'))
+# perform substitutions
+base_text.gsub!("DATE", date)
+base_text.gsub!("COMPANY", company)
+base_text.gsub!("POSITION", position)
+base_text.gsub!("BODY", body)
 
-# file = kit.to_file('base2.pdf')
+# generate html/pdf
+File.open("temp.html", "w") { |file| file.write(base_text)}
 
-# fileName = ARGV[0]
-# text = ""
-# file = File.new(fileName, "r")
-# 
-# while(line = file.gets)
-#   puts line.length()
-#   text += line + "\n"
-# end
+f = `chrome.exe temp.html`
+
+t = gets.chomp
+
+kit = PDFKit.new(File.new('temp.html'))
+file = kit.to_file("#{ARGV[0]}.pdf")
+
+# cleanup
+# `rm temp.html`
