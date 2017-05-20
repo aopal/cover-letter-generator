@@ -5,7 +5,7 @@
   },
   "front-end-web": {
     "matcher": "(javascript|coffeescript|typescript|css|html|angular|node|extension|front.end.web)",
-    "text": "I have considerable background in front-end web development having worked multiple jobs in the field using <b>Javascript</b>, <b>CSS</b> and <b>HTML5</b>, as well as other technologies such as <b>Typescript</b>, <b>Coffeescript</b>, <b>Less</b>, <b>AngularJS</b>, <b>node.js</b>, and <b>Electron</b>. I also have experience building browser extensions for Google Chrome."
+    "text": "I have considerable background in front-end web development having worked multiple jobs in the field using <b>Javascript</b>, <b>CSS</b> and <b>HTML</b>, as well as other technologies such as <b>Typescript</b>, <b>Coffeescript</b>, <b>Less</b>, <b>AngularJS</b>, <b>node.js</b>, and <b>Electron</b>. I also have experience building browser extensions for Google Chrome."
   },
   "back-end-web": {
     "matcher": "(ruby|rails|docker|aws|back.end.web)",

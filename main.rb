@@ -1,4 +1,3 @@
-require 'pdfkit'
 require 'combine_pdf'
 require 'watir'
 require 'json'
@@ -13,16 +12,6 @@ rsa = "..\\RSA-Electron\\main.js"
 content = `node #{rsa} -d #{priv_key} #{enc_file}`
 user = content.split("\n").first
 pass = content.split("\n").last.split("\x00").first
-
-PDFKit.configure do |config|
-  config.wkhtmltopdf = wkhtml
-  config.default_options = {
-    :page_size => 'Letter',
-    :print_media_type => true,
-    :disable_external_links => true,
-    :encoding => 'utf-8'
-  }
-end
 
 # navigate to page
 parent = Watir::Browser.new :chrome
@@ -78,12 +67,13 @@ base_text.gsub!("BODY", body)
 # generate html/pdf
 File.open("temp.html", "w") { |file| file.write(base_text)}
 
-f = `chrome.exe temp.html`
+# manually saving through chrome gives the nicest looking pdf :/
+`chrome.exe temp.html`
+puts "Please enter name of saved pdf: "
+cover_letter = STDIN.gets.chomp
 
-t = gets.chomp
-
-kit = PDFKit.new(File.new('temp.html'))
-file = kit.to_file("#{ARGV[0]}.pdf")
-
-# cleanup
-# `rm temp.html`
+# combine with resume/reference letter
+pdf = CombinePDF.new
+pdf << CombinePDF.load(cover_letter)
+pdf << CombinePDF.load("resume-reference.pdf")
+pdf.save("#{position} #{company}.pdf".gsub(/[\/\\\<\>\:\"\|\?\*]/,"")) # trim out any illegal characters
