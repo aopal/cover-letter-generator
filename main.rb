@@ -25,8 +25,8 @@ parent.input(id: "postingId").send_keys(ARGV[0])
 parent.form(id: "searchByPostingNumberForm").link.click
 
 # extract info
-position = parent.tr(text: /job title/i).text.split(": ").last
-company = parent.tr(text: /organization/i).text.split(": ").last
+position = parent.tr(text: /job title: /i).text.split(": ").last
+company = parent.tr(text: /organization: /i).text.split(": ").last
 
 search_text = parent.tr(text: /job summary/i).text
 search_text += "\n\n" + parent.tr(text: /job responsibilities/i).text
@@ -34,8 +34,9 @@ search_text += "\n\n" + parent.tr(text: /required skills/i).text
 search_text.downcase!
 
 # a bit of processing
-position.gsub!(/ engineering/i, "")
-company.gsub!(/( corp| inc)/i, "")
+position.gsub!(/ engineering/i, " Engineer")
+company.gsub!(/( corporation| corp| incorporated| inc| limited| ltd| canada)/i, "")
+company.gsub!(".","")
 
 # more initialization
 base_text = ""
@@ -55,6 +56,7 @@ mappings.each do |i|
   end
 end
 
+# there's some weirdness with encodings cause I'm doing this on windows
 body.force_encoding(::Encoding::UTF_8)
 base_text.force_encoding(::Encoding::UTF_8)
 
@@ -64,16 +66,22 @@ base_text.gsub!("COMPANY", company)
 base_text.gsub!("POSITION", position)
 base_text.gsub!("BODY", body)
 
-# generate html/pdf
+# generate html
 File.open("temp.html", "w") { |file| file.write(base_text)}
 
 # manually saving through chrome gives the nicest looking pdf :/
 `chrome.exe temp.html`
-puts "Please enter name of saved pdf: "
-cover_letter = STDIN.gets.chomp
+puts "Press enter once pdf is saved."
+STDIN.gets.chomp
+cover_letter = "temp.pdf"
 
 # combine with resume/reference letter
 pdf = CombinePDF.new
 pdf << CombinePDF.load(cover_letter)
 pdf << CombinePDF.load("resume-reference.pdf")
-pdf.save("#{position} #{company}.pdf".gsub(/[\/\\\<\>\:\"\|\?\*]/,"")) # trim out any illegal characters
+
+fileName = "#{ARGV[0]} #{position} - #{company}.pdf".gsub(/[\/\\\<\>\:\"\|\?\*]/,"") # trim out any illegal characters
+pdf.save(fileName) 
+
+# for whatever reason, pdf.save won't allow specifying a path, absolute or relative
+`move \"#{fileName}\" generated` 

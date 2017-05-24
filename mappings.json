@@ -1,26 +1,30 @@
 {
   "object-oriented": {
-    "matcher": "(c\\+\\+|object-oriented)",
+    "matcher": "(c\\+\\+|object.oriented| oop)",
     "text": "I am highly experienced with object-oriented programming, having taken multiple courses in <b>C</b> and <b>C++</b>. These courses have involved group projects in which I have taken the role of team lead and have also designed the structure of the entire multi-thousand line program."
   },
   "front-end-web": {
-    "matcher": "(javascript|coffeescript|typescript|css|html|angular|node|extension|front.end.web)",
+    "matcher": "(javascript|java script|coffeescript|typescript|css|html|angular|node|extension|front.end.web)",
     "text": "I have considerable background in front-end web development having worked multiple jobs in the field using <b>Javascript</b>, <b>CSS</b> and <b>HTML</b>, as well as other technologies such as <b>Typescript</b>, <b>Coffeescript</b>, <b>Less</b>, <b>AngularJS</b>, <b>node.js</b>, and <b>Electron</b>. I also have experience building browser extensions for Google Chrome."
   },
   "back-end-web": {
-    "matcher": "(ruby|rails|docker|aws|back.end.web)",
+    "matcher": "(ruby|rails|docker|rspec|aws|amazon.web.service|back.end.web)",
     "text": "During my second co-op term I wrote back-end code on a stack of <b>Ruby on Rails</b>, <b>Docker</b> and <b>AWS</b> (specifically ECS, EC2, EB and SQS). I also wrote unit tests using RSpec and FactoryGirl, and defined my team's style guide for testing application code."
   },
   "operating-systems": {
-    "matcher": "(windows|os x|mac|unix|linux|bash)",
-    "text": "At past companies I have developed on all of <b>Windows</b>, <b>OS X</b> and <b>Unix/Linux<b> environments and would consider myself comfortable coding on each of them. Through school I have learned Racket, a functional language based on Scheme, and <b>Bash</b> scripting, which I have also used in the workplace."
+    "matcher": "(windows|os x|mac|unix|linux|bash|shell.script)",
+    "text": "At past companies I have developed on all of <b>Windows</b>, <b>OS X</b> and <b>Unix/Linux</b> environments and would consider myself comfortable coding on each of them. Through school I have learned Racket, a functional language based on Scheme, and <b>Bash</b> scripting, which I have also used in the workplace."
   },
   "version-control": {
     "matcher": "(git|github|mercurial|version.control|vcs)",
     "text": "I have worked extensively with several version control softwares such as <b>Git</b>, <b>Github</b> and <b>Mercurial</b> in the contexts of university classes, independent projects and work environments. I have also researched into these technologies for past work term reports."
   },
   "research-projects": {
-    "matcher": "(research|proof.of.concept)",
+    "matcher": "(research|proof.of.concept|prototype|prototyping|r\&d|r \& d)",
     "text": "At all my previous companies I have worked on research projects, quickly producing detailed proof-of-concepts for technologies such as <b>Electron</b>, <b>Aurelia</b>, <b>Parsehub</b> and the <b>Google Web Speech API</b>. At Flipp I researched a long-standing issue surrounding stale database locks and designed a solution to fix it."
+  },
+  "scienctific-programming": {
+    "matcher": "(scienctific)",
+    "text": "This term I am taking <b>Physics 239: Computational Physics</b>. Using both C++ and Octave, a free version of <b>Matlab</b>, this course teaches an object‐oriented approach to many phsyics problems, with more general methods taught as well, such as solving differential equations and Monte Carlo techniques."
   }
 }
