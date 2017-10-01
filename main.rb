@@ -4,10 +4,9 @@ require 'json'
 require 'date'
 
 # initialize stuff
-wkhtml = "wkhtmltopdf.exe"
 priv_key = "C:\\keys\\priv"
 enc_file = "enc"
-rsa = "..\\RSA-Electron\\main.js"
+rsa = "..\\node-rsa\\main.js"
 
 content = `node #{rsa} -d #{priv_key} #{enc_file}`
 user = content.split("\n").first
@@ -16,7 +15,7 @@ pass = content.split("\n").last.split("\x00").first
 # navigate to page
 parent = Watir::Browser.new :chrome
 parent.goto "waterlooworks.uwaterloo.ca"
-parent.link(text: "Students/Staff").click
+parent.link(text: "Students/Alumni/Staff").click
 parent.input(id: "username").send_keys(user)
 parent.input(id: "password").send_keys(pass)
 parent.input(name: "submit").click
@@ -71,17 +70,10 @@ File.open("temp.html", "w") { |file| file.write(base_text)}
 
 # manually saving through chrome gives the nicest looking pdf :/
 `chrome.exe temp.html`
-puts "Press enter once pdf is saved."
+puts "Press enter once the pdf is saved, please use default name of \"temp.pdf\"."
 STDIN.gets.chomp
 cover_letter = "temp.pdf"
-
-# combine with resume/reference letter
-pdf = CombinePDF.new
-pdf << CombinePDF.load(cover_letter)
-pdf << CombinePDF.load("resume-reference.pdf")
-
 fileName = "#{ARGV[0]} #{position} - #{company}.pdf".gsub(/[\/\\\<\>\:\"\|\?\*]/,"") # trim out any illegal characters
-pdf.save(fileName) 
 
 # for whatever reason, pdf.save won't allow specifying a path, absolute or relative
-`move \"#{fileName}\" generated` 
+`move temp.pdf generated/\"#{fileName}\"` 
