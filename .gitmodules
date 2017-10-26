@@ -1,0 +1,3 @@
+[submodule "shared-files"]
+	path = shared-files
+	url = git@github.com:aopal/web-shared-files.git
