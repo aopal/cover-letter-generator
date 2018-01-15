@@ -1,16 +1,20 @@
-require 'combine_pdf'
 require 'watir'
 require 'json'
 require 'date'
+require 'io/console'
 
 # initialize stuff
 priv_key = "C:\\keys\\priv"
 enc_file = "enc"
 rsa = "..\\node-rsa\\main.js"
 
-content = `node #{rsa} -d #{priv_key} #{enc_file}`
-user = content.split("\n").first
-pass = content.split("\n").last.split("\x00").first
+# content = `node #{rsa} -d #{priv_key} #{enc_file}`
+# user = content.split("\n").first
+# pass = content.split("\n").last.split("\x00").first
+
+user = "a4opal"
+puts "password:"
+pass = STDIN.noecho(&:gets).chomp
 
 # navigate to page
 parent = Watir::Browser.new :chrome

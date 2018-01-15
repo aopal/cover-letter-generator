@@ -4,12 +4,20 @@
     "text": "I am highly experienced with object-oriented programming, having taken multiple courses in <b>C</b> and <b>C++</b>. These courses have involved group projects in which I have taken the role of team lead and have also designed the structure of the entire multi-thousand line program."
   },
   "front-end-web": {
-    "matcher": "(javascript|java script|coffeescript|typescript|css|html|angular|node|extension|front.end.web)",
-    "text": "I have considerable background in front-end web development having worked multiple jobs in the field using <b>Javascript</b>, <b>CSS</b> and <b>HTML</b>, as well as other technologies such as <b>Typescript</b>, <b>Coffeescript</b>, <b>Less</b>, <b>AngularJS</b>, <b>node.js</b>, and <b>Electron</b>. I also have experience building browser extensions for Google Chrome."
+    "matcher": "(javascript|java script|coffeescript|typescript|css|html|angular|react|extension|front.end(.web)?)",
+    "text": "I have considerable background in front-end web development having worked multiple jobs in the field using <b>Javascript</b>, <b>CSS</b> and <b>HTML</b>, as well as other technologies such as <b>Typescript</b>, <b>Less</b>, <b>Sass</b>, <b>AngularJS</b>, <b>React</b> and <b>Electron</b>. I also have experience building browser extensions for Google Chrome."
   },
   "back-end-web": {
-    "matcher": "(ruby|rails|docker|rspec|aws|amazon.web.service|back.end.web)",
-    "text": "During my second co-op term I wrote back-end code on a stack of <b>Ruby on Rails</b>, <b>Docker</b> and <b>AWS</b> (specifically ECS, EC2, EB and SQS). I also wrote unit tests using RSpec and FactoryGirl, and defined my team's style guide for testing application code."
+    "matcher": "(ruby|rails|node|express|back.end.web)",
+    "text": "At past companies I've had extensive experience writing server-side code in both <b>node.js</b> and <b>Ruby</b>, using frameworks such as <b>express.js</b>, <b>Rails</b> and <b>Sinatra</b>. I've also written servers for personal projects, as well as configuring the DNS for them."
+  },
+  "database": {
+    "matcher": "(database|sql|migration)",
+    "text": "Past jobs have had me interacting greatly with the database, including many complex <b>MySQL</b> queries, optimizing table indices"
+  },
+  "aws": {
+    "matcher": "(aws|amazon.web.service)",
+    "test": "I have used <b>Amazon Web Services</b> in past co-op jobs, particularly <b>EC2</b>, <b>ECS</b> and <b>IAM</b>, though I'm also familiar with S3, RDS, SQS, Elastic Beanstalk,ElastiCache, Kinesis, OpsWorks and CloudWatch. I've been tasked with creating new staging instances, as well as first-time setup of new microservices."
   },
   "operating-systems": {
     "matcher": "(windows|os x|mac|unix|linux|bash|shell.script)",
